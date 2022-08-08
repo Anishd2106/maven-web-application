@@ -1,9 +1,25 @@
 pipeline { 
     agent any  
     stages { 
-        stage('Build') { 
+        stage('Compile stage') { 
             steps { 
-               echo 'This is a minimal pipeline.' 
+                withMaven(Maven : 'Maven 3.8.6') {
+                    sh 'mvn clean'
+                } 
+            }
+        }
+        stage('Testing stage') { 
+            steps { 
+                withMaven(Maven : 'Maven 3.8.6') {
+                    sh 'mvn test'
+                }
+            }
+        }
+        stage('CDeploy stage') { 
+            steps { 
+                withMaven(Maven : 'Maven 3.8.6') {
+                    sh 'mvn deploy'
+                }
             }
         }
     }
